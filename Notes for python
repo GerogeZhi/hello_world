@@ -80,7 +80,7 @@ plt.plot(x[0],x[1],'ro-',linewidth=0.5,markersize=3)
 #reading in a book
 text=read_book('./English/shakespeare/Romeo and Juliet.txt')
 len(text)
-ind=text.find("what's in a name?")
+ind=text.find("What's in a name?")
 sample_text=text[ind:ind+1000]
 
 #navigate file directories
