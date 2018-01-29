@@ -1,4 +1,4 @@
-# Using-python-for-research
-This is my first repository
+# python studying  
+Some cases gained from Harvardx
 
 
