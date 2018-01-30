@@ -19,9 +19,11 @@ iris_data
 
 bird trajectory,spped frequency  
 ![Image](https://github.com/GerogeZhi/Python_case/blob/master/project_plots/birds_trajectory.png)  
+
 ![Image](https://github.com/GerogeZhi/Python_case/blob/master/project_plots/frequency.png)  
 
 `mean_speed counting and plot` 
+
 ![Image](https://github.com/GerogeZhi/Python_case/blob/master/project_plots/daily_mean_speed.png)   
 
 social network  
