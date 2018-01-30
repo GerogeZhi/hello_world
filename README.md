@@ -37,8 +37,10 @@ social network
 
 ![Image](https://github.com/GerogeZhi/Python_case/blob/master/project_plots/karate_graph.png)   
 
-village  
+village1  
 
 ![Image](https://github.com/GerogeZhi/Python_case/blob/master/project_plots/village1.png)    
+
+village2  
 
 ![Image](https://github.com/GerogeZhi/Python_case/blob/master/project_plots/village2.png)  
