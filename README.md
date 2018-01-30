@@ -2,10 +2,11 @@
 random walk  
 input file(about books)  
 KNN  
-"generate synth data"  
+`generate synth data`  
 prediction_grid  
 iris_dataset  
-"whisky cluster"  
+`whisky cluster`  
 bird trajectory,frequency  
-"mean_speed"
+`mean_speed counting and plot` 
+
 
