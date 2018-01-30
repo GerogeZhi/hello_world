@@ -1,5 +1,6 @@
 ## project
 random walk  
+
 ![Image](https://github.com/GerogeZhi/Python_case/blob/master/project_plots/random_walk.pdf)
 
 input file(about books length and unique words)  
