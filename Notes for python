@@ -39,6 +39,7 @@ random.choice(range(1,7))
 random.choice([range(1,7)])#out:range(1,7) choose one project
 
 #visualization
+
 ys=[]
 for rep in range(100):
     y=0
