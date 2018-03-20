@@ -16,9 +16,6 @@ titanic.Embarked[titanic['Embarked']=='S']=0
 titanic.Embarked[titanic['Embarked']=='C']=1
 titanic.Embarked[titanic['Embarked']=='Q']=2
 
-
-
-
 #__________________LinearRegression
 
 from sklearn.linear_model import LinearRegression
@@ -49,7 +46,6 @@ accuracy=len(predictions[predictions==titanic['Survived']])/len(predictions)
 
 #__________________LogisticRegression
 
-
 from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
 algo=LogisticRegression(random_state=1)
@@ -66,9 +62,7 @@ np.max(score_p)
 
 scores=cross_val_score(algo,titanic[predictors],titanic['Survived'],cv=8)
 
-
 #____________prediction
-
 
 titanic_test=pd.read_csv('test.csv')
 
@@ -86,9 +80,6 @@ predictions=alg.predict(titanic_test[predictors])
 submission=pd.DataFrame({"PassengerId":titanic_test['PassengerId'],'Survived':predictions})
 submission.to_csv('kaggle_titanic.csv',index=False)
 
-
-
-
 #______________________RandomForestClassifier
 
 from sklearn import cross_validation
@@ -101,7 +92,6 @@ scores=cross_validation.cross_val_score(Ram,titanic[predictors],titanic['Survive
 print(scores.mean())
 
 #0.8104
-
 
 Ram2=RandomForestClassifier(random_state=1,n_estimators=40,min_samples_split=4,min_samples_leaf=2)
 scores=cross_validation.cross_val_score(Ram2,titanic[predictors],titanic['Survived'],cv=kf)
@@ -121,7 +111,6 @@ plt.plot(forplot,'ro-',markersize=2)
 
 Ram=RandomForestClassifier(random_state=1,n_estimators=50,min_samples_split=4,min_samples_leaf=2)
 #0.8396
-
 
 titanic['NameLength']=titanic['Name'].apply(lambda x : len(x))
 
@@ -145,15 +134,7 @@ for k,v in title_mapping.items():
 print(pd.value_counts(titles))
 titanic['Titles']=titles
 
-
-
-
-
-
-
 #---------Feature Selection
-
-
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -167,20 +148,14 @@ scores=-np.log10(selector.pvalues_)
 plt.bar(range(len(predictors)),scores)
 plt.xticks(range(len(predictors)),predictors,rotation='vertical')
 
-
 predictors=['Pclass','Sex','Fare','Titles']
 
 from sklearn.feature_selection import SelectKBest,f_classif
 selector=SelectKBest(f_classif,k=4)
 selector.fit(titanic[predictors],titanic['Survived'])
-
 scores=-np.log10(selector.pvalues_)
-
 plt.bar(range(len(predictors)),scores)
 plt.xticks(range(len(predictors)),predictors,rotation='vertical')
-
-
-
 
 #___________Model Selectioin
 #___________Ensemble Generation
@@ -223,8 +198,6 @@ accuracy=len(predictions[predictions==titanic['Survived']])/len(predictions)
 print(accuracy)
 #0.8170
 
-
-
 #_____________GradientBoostingClassifier
 
 from sklearn.ensemble import GradientBoostingClassifier
@@ -236,9 +209,6 @@ scores=cross_validation.cross_val_score(gra,titanic[predictors],titanic['Survive
 scores.mean()
 
 #0.8283
-
-
-
 
 #_____________finetuning
 
@@ -252,7 +222,6 @@ for i in range(1,6):
     score_p.append(depth_p)
     depth_p=[]
     print(i)
-    
 
 for z in range(5):
     y=score_p[z]
@@ -260,9 +229,7 @@ for z in range(5):
 plt.legend(loc='upper left')
 
 # 47 2 one loop
-
-# 37 5 wo loop 
-
+# 37 5 two loop 
 
 gra=GradientBoostingClassifier(random_state=1,n_estimators=37,max_depth=5)
 scores=cross_validation.cross_val_score(gra,titanic[predictors],titanic['Survived'],cv=kf)
@@ -270,9 +237,6 @@ scores.mean()
 
 # 0.8328 one loop
 # 0.8362 two loop
-
-
-
 
 score_R=[]
 depth_R=[]
@@ -295,7 +259,6 @@ scores=cross_validation.cross_val_score(alg,titanic[predictors],titanic['Survive
 scores.mean()
 
 #0.8429
-
 
 titanic_test=pd.read_csv('test.csv')
 
@@ -334,28 +297,6 @@ predictions=alg.predict(titanic_test[predictors])
 submission=pd.DataFrame({"PassengerId":titanic_test['PassengerId'],'Survived':predictions})
 submission.to_csv('kaggle_titanic_tonight.csv',index=False)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ensemble=[[GradientBoostingClassifier(random_state=1,n_estimators=50,max_depth=3),predictors],[alg,predictors]]
 kf=cross_validation.KFold(titanic.shape[0],n_folds=8,random_state=1)
 
@@ -377,26 +318,5 @@ accuracy=len(predictions[predictions==titanic['Survived']])/len(predictions)
 print(accuracy)
 
 #0.8226
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
