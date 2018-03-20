@@ -47,7 +47,6 @@ accuracy=len(predictions[predictions==titanic['Survived']])/len(predictions)
 
 #0.8148
 
-
 #__________________LogisticRegression
 
 
