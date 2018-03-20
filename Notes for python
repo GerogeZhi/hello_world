@@ -166,7 +166,7 @@ plot_prediction_grid(xx,yy,prediciton_grid,filename)
 
 #load a CSV
 whisky=pd.read_csv('whiskies.txt')
-whisky['region']=pd.read_csv('regions.txt)
+whisky['region']=pd.read_csv('regions.txt')
 whisky.head()
 whisky.columns
 flavors=whisky.iloc[:,2:14]
