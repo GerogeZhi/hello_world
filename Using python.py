@@ -1,6 +1,8 @@
+
+# Customizing your plots
+
 import matplotlib.pyplot as plt
 import numpy as np
-
 x=np.logspace(-1,1,40)
 y1=x**2
 y2=x**1.5
@@ -17,7 +19,6 @@ plt.hist(x)
 plt.hist(x,normed=True)
 plt.hist(x,normed=True,bins=np.linspace(-5,5,21))
 
-
 plt.figure()
 plt.subplot(221)
 plt.hist(x,bins=30)
@@ -28,12 +29,12 @@ plt.hist(x,bins=30,cumulative=30)
 plt.subplot(224)
 plt.hist(x,bins=30,normed=True,histtype='step')
 
+# simulating randomness
 
 import random
 random.choice([1,2,3,4,5,6])
 random.choice(range(1,7))
 random.choice([range(1,7)])
-
 ys=[]
 for rep in range(100):
     y=0
@@ -44,6 +45,8 @@ for rep in range(100):
 plt.hist(ys)
 plt.hist(ys,normed=True)
 
+#measure running time
+
 import time
 start_time=time.clock()
 x=np.random.randint(1,7,(10000,10))
@@ -52,7 +55,8 @@ plt.hist(y)
 end_time=time.clock()
 print(end_time-start_time)
 
-#random walk
+# random walk
+
 delta_x=np.random.normal(0,1,(2,100))
 x=np.cumsum(delta_x,axis=1)
 plt.plot(x[0],x[1],'ro-')
@@ -62,17 +66,15 @@ delta_x=np.random.normal(0,1,(2,100))
 X=np.concatenate((x_0,np.cumsum(delta_x,axis=1)),axis=1)
 plt.plot(X[0],X[1],'ro-')
 
-
 plt.figure()
 plt.subplot(121)
 plt.plot(x[0],x[1],'ro-')
 plt.subplot(122)
 plt.plot(x[0],x[1],'ro-',linewidth=0.5,markersize=3)
 
-
+# reading in a book
 
 test="This is my test. we're keeping this text short to keep things manageable "
-
 def count_words(text):
     text=text.lower()
     skips=[',','.',';',':',"'"]
@@ -105,8 +107,6 @@ def word_stats(word_counts):
     counts=word_counts.values()
     return(num_unique,counts)
 
-
-
 text=read_book('./Books/English/shakespeare/Romeo and Juliet.txt')
 len(text)
 ind=text.find("What's in a name?")
@@ -116,11 +116,11 @@ word_counts=count_words_fast(text)
 (num_unique,counts)=word_stats(word_counts)
 print(num_unique,sum(counts))
 
+# navigate file directories
 
 import os
 book_dir="./Books"
 import pandas as pd
-
 stats=pd.DataFrame(columns=('language','author','title','length','unique'))
 title_num=1
 for language in os.listdir(book_dir):
@@ -133,6 +133,7 @@ for language in os.listdir(book_dir):
             stats.loc[title_num]=language,author.capitalize(),title.replace('.txt',''),sum(counts),num_unique
             title_num+=1
 
+#plot the book length
 
 table=pd.DataFrame(columns=('name','age'))
 table.loc[1]='james',32
@@ -151,10 +152,11 @@ subset=stats[stats.language=="German"]
 plt.loglog(subset.length,subset.unique,'o',label="German",color="orange")
 subset=stats[stats.language=="Portuguese"]
 plt.loglog(subset.length,subset.unique,'o',label="Portuguese",color="blueviolet")
-
 plt.legend()
 plt.xlabel('Book length')
 plt.ylabel('Number of unique')
+
+# ---- KNN (K nearest neighbors)
 
 import numpy as np
 def distance(p1,p2):
@@ -163,7 +165,7 @@ p1=np.array([1,1])
 p2=np.array([4,5])
 distance(p1,p2)
 
-
+# most common vote
 
 import random
 def majority_vote(votes):
@@ -189,9 +191,10 @@ def majority_vote_short(votes):
     mode,count=ss.mstats.mode(votes)
     return mode
 
+# find the nearest neighbors
+
 points=np.array([[1,1],[1,2],[1,3],[2,1],[2,2],[2,3],[3,1],[3,2],[3,3]])
 p = np.array([2.5,2])
-
 def find_nearest_neighbors(p,points,k=5):
     distances=np.zeros(points.shape[0])
     for i in range(len(distances)):
@@ -204,10 +207,11 @@ plt.plot(points[:,0],points[:,1],'ro')
 plt.plot(p[0],p[1],'bo')
 plt.axis=[0.5,3.5,0.5,3.5]
 
+# predict the class
+
 def knn_predict(p,points,outcomes,k=5):
     ind=find_nearest_neighbors(p,points,k)
     return majority_vote(outcomes[ind])
-
 
 outcomes=np.array([0,0,0,0,1,1,1,1,1])
   
@@ -222,6 +226,7 @@ plt.figure()
 plt.plot(points[:n,0],points[:n,1],'ro',markersize=2)
 plt.plot(points[n:,0],points[n:,1],'bo',markersize=2)
 
+# make prediction grid
 
 def make_prediction_grid(predictors,outcomes,limits,h,k):
     (x_min,x_max,y_min,y_max)=limits
@@ -234,6 +239,8 @@ def make_prediction_grid(predictors,outcomes,limits,h,k):
             p=np.array([x,y])
             prediction_grid[j,i]=knn_predict(p,predictors,outcomes,k)
     return (xx,yy,prediction_grid)
+
+# bias_variance tradeoff
 
 (predictors,outcomes)=generate_synth_data(1000)
 k=5;limits=(-3,4,-3,4);h=0.1
@@ -253,8 +260,7 @@ def plot_prediction_grid(xx,yy,prediction_grid):
 
 plot_prediction_grid(xx,yy,prediction_grid)
     
-
-
+# case -- An application to Iris data
 
 from sklearn import datasets
 iris=datasets.load_iris()
@@ -268,23 +274,20 @@ k=5;limits=(4,8,1.5,4.5);h=0.1
 (xx,yy,prediction_grid)=make_prediction_grid(predictors,outcomes,limits,h,k)
 plot_prediction_grid(xx,yy,prediction_grid)
 
-
 from sklearn.neighbors import KNeighborsClassifier
 knn=KNeighborsClassifier(n_neighbors=5)
 knn.fit(predictors,outcomes)
 sk_predictions=knn.predict(predictors)
 plt.plot(sk_predictions,'ro',markersize=1)
-
 my_predictions=np.array([knn_predict(p,predictors,outcomes,5) for p in predictors])
-
 np.mean(sk_predictions==my_predictions)
 np.mean(outcomes==my_predictions)
 
-
+# case --- whisky cluster
+#pandas
 data={'name':['tim','pan','jim','san'],
       'age':[23,12,23,55],
       'zip':['123','432','243','234','1234']}
-
 
 import pandas as pd
 whisky=pd.read_csv('whiskies.txt')
@@ -292,6 +295,8 @@ whisky['region']=pd.read_csv('regions.txt')
 whisky.head()
 whisky.columns
 flavors=whisky.iloc[:,3:14]
+
+# plot a correlation matrix
 
 import matplotlib.pyplot as plt
 corr_flavors=pd.DataFrame(flavors)
@@ -302,10 +307,11 @@ corr_whisky=pd.DataFrame.corr(flavors.transpose())
 plt.pcolor(corr_whisky)
 plt.colorbar()
 
+# spectral co-clustering
+
 from sklearn.cluster.bicluster import SpectralCoclustering
 model=SpectralCoclustering(n_clusters=6,random_state=0)
 model.fit(corr_whisky)
-
 model.rows_
 np.sum(model.rows_,axis=0)
 np.sum(model.rows_,axis=1)
@@ -328,8 +334,8 @@ plt.title('Rearranged')
 plt.axis('tight')
 plt.colorbar()
 
-
-
+# case -- bird tracking
+# pd.series
 data=pd.Series([1,2,3,4])
 data=data.loc[[3,0,1,2]]
 data=data.reset_index(drop=True)
@@ -337,6 +343,8 @@ data=data.reset_index(drop=True)
 birddata=pd.read_csv('bird_tracking.csv')
 birddata.info()
 birddata.head()
+
+# plot latitude and longitude , traj
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -352,6 +360,8 @@ for bird_name in bird_names:
 plt.xlabel('longitude');plt.ylabel('latitude')
 plt.legend(loc='upper left')
 
+# speed frequency  plot
+
 plt.figure(figsize=(8,4))
 ix=birddata.bird_name=='Eric'
 speed=birddata.speed_2d[ix]
@@ -362,13 +372,12 @@ plt.xlabel('2d speed m/s');plt.ylabel('frequency')
 birddata.speed_2d.plot(kind='hist',range=[0,30])
 plt.xlabel('2d speed m/s')
 
-
+# deal with TimeSeries
 
 import datetime
 datetime.datetime.today()
 date_str=birddata.date_time[0]
 datetime.datetime.strptime(date_str[:-3],"%Y-%m-%d %H:%M:%S")
-
 timestamps=[]
 for k in range(len(birddata)):
     timestamps.append(datetime.datetime.strptime\
@@ -376,7 +385,7 @@ for k in range(len(birddata)):
 
 birddata['timestamp']=pd.Series(timestamps,index=birddata.index)
 
-
+# daily mean speed
 
 data=birddata[birddata.bird_name=='Eric']
 times=data.timestamp
@@ -396,7 +405,7 @@ plt.figure(figsize=(8,6))
 plt.plot(daily_mean_speed)
 plt.xlabel('day');plt.ylabel('mean speed m/s')
 
-    
+# cartopy    
 
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
@@ -417,27 +426,5 @@ for name in bird_names:
     x,y=birddata.longitude[ix],birddata.latitude[ix]
     ax.plot(x,y,transform=ccrs.Geodetic(),label=name)
             
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
