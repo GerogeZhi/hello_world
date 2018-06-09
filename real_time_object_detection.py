@@ -7,8 +7,6 @@ import imutils
 import time
 import cv2
 
-
-
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--prototxt", required=True,
@@ -19,8 +17,6 @@ ap.add_argument("-c", "--confidence", type=float, default=0.2,
 	help="minimum probability to filter weak detections")
 args = vars(ap.parse_args())
 
-
-
 # initialize the list of class labels MobileNet SSD was trained to
 # detect, then generate a set of bounding box colors for each class
 CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
@@ -28,8 +24,6 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 	"dog", "horse", "motorbike", "person", "pottedplant", "sheep",
 	"sofa", "train", "tvmonitor"]
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
-
-
 
 # load our serialized model from disk
 print("[INFO] loading model...")
@@ -41,8 +35,6 @@ print("[INFO] starting video stream...")
 vs = VideoStream(src=0).start()
 time.sleep(2.0)
 fps = FPS().start()
-
-
 
 # loop over the frames from the video stream
 while True:
@@ -61,9 +53,7 @@ while True:
 	net.setInput(blob)
 	detections = net.forward()
 
-
-
-	# loop over the detections
+# loop over the detections
 for i in np.arange(0, detections.shape[2]):
 		# extract the confidence (i.e., probability) associated with
 		# the prediction
@@ -88,18 +78,15 @@ for i in np.arange(0, detections.shape[2]):
 		cv2.putText(frame, label, (startX, y),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)	
 
-
 # show the output frame
 cv2.imshow("Frame", frame)
 key = cv2.waitKey(1) & 0xFF
- 
-	# if the `q` key was pressed, break from the loop
+# if the `q` key was pressed, break from the loop
 if key == ord("q"):
-		break
+	break
  
-	# update the FPS counter
+# update the FPS counter
 fps.update()
-
 
 # stop the timer and display FPS information
 fps.stop()
@@ -109,13 +96,4 @@ print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 # do a bit of cleanup
 cv2.destroyAllWindows()
 vs.stop()
-
-
-
-
-
-
-
-
-
 
