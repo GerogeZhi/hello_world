@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jan 26 14:27:26 2018
-
-@author: lenovo
-"""
 
 import tensorflow as tf
 import numpy as np
@@ -29,5 +23,3 @@ for step in range(0,201):
     if step % 20 == 0:
         print(step,sess.run(w),sess.run(b))
         
-
-
